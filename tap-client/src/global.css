@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-roboto: Roboto;
+  --p: "Open Sans";
+  --font-lato: Lato;
+  --font-poppins: Poppins;
+
+  /* font sizes */
+  --font-size-xl: 20px;
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --p-size: 16px;
+  --font-size-mini: 15px;
+
+  /* Colors */
+  --neutral-colors-100: #fff;
+  --color-darkslateblue: #392368;
+  --color-thistle-100: #cec6da;
+  --color-thistle-200: #cec5dd;
+  --gray-2: #dde2e5;
+  --neutral-colors-300: #f1f3f7;
+  --neutral-colors-600: #6d7590;
+  --color-black: #000;
+
+  /* Paddings */
+  --padding-5xs: 8px;
+
+  /* Border radiuses */
+  --br-9xs: 4px;
+  --br-26xl: 45px;
+  --br-4xs: 9px;
+
+  /* Effects */
+  --card-shadow: 0px 2px 4px rgba(33, 36, 41, 0.05);
+  --neutral-shadow-02: 0px 1px 4px rgba(25, 33, 60, 0.08);
+}
