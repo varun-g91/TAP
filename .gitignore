@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+/node_modules/
+/jspm_packages/
+
+# Dependency files
+package-lock.json
+yarn.lock
+
+# dotenv environment variable files
+.env
+.env.local
+.env.*.local
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Optional log files for npm and yarn
+.npm/_logs
+.yarn/_logs
+
+# OS or editor specific files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+tap-server/config.js
+
+tap-server/package-lock.json
+tap-server/package.json
+tap-server/vars.env
+tap-server/node_modules/.package-lock.json
