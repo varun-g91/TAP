@@ -21,18 +21,19 @@ const Header = () => {
                     src="/public/image-14@2x.png"
                 />
                 <div className="members-login-parent">
-                    <a className="members-login">Member’s Login</a>
-                    <a className="sign-up">Sign up</a>
-                </div>
-                <button
-                    className="frame-button"
-                    id="contactsales"
-                    onClick={closePopup}
-                >
-                    <div className="contact-sales-wrapper">
-                        <b className="contact-sales">Contact Sales</b>
+                    <div className="members-login-wrapper"> 
+                        <button className="btn">Member’s Login</button></div>
+                    <div className="sign-up-wrapper">
+                        <button className="btn">Sign Up</button>
                     </div>
-                </button>
+                    <div className="contact-sales-wrapper">
+                        <button className="btn">Contact Sales</button>
+                    </div>
+                    
+                    {/* <a className="members-login">Member’s Login</a>
+                    <a className="sign-up">Sign up</a> */}
+                </div>
+                
                 <img
                     className="logo"
                     alt=""
