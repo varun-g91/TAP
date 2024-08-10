@@ -1,9 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { PORT, conString } from './config.js';
 import cors from 'cors';
 import routes from './routes/routes.js';
+import { errorHandler } from './errorHandler.js';
+import process from 'process';
+import dotenv from 'dotenv';
 const app = express();
+dotenv.config({ path: '/home/varun/TAP/TAP/tap-server/vars.env' });
+
+const PORT = process.env.PORT;
+const conString = process.env.CONNECTION_STRING;
 
 //middleware for parsing request body
 app.use(express.json());
@@ -26,6 +32,9 @@ const corsConfig = {
 app.use(cors(corsConfig));
 
 app.use('/api/tap-server', routes);
+
+// Error handling middleware
+app.use(errorHandler);
 
 //Database connection
 mongoose
