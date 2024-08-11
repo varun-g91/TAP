@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import iconHelp from "/public/iconhelp.svg";
 import vectorIcon from "/public/vector.svg";
-import "../index.css"; // Import your CSS file
 
 const Tooltip = () => {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
