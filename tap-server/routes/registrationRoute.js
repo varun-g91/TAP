@@ -42,15 +42,15 @@ router.post('/', async (req, res) => {
             password: hashedPassword,
         }).save();
 
-        const token = await new Token({
+        const verificationToken = await new Token({
             userId: user._id,
             token: crypto.randomBytes(16).toString('hex'),
         }).save();
 
-        const url = `${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`;
+        const url = `${process.env.BASE_URL}/users/${user._id}/verify/${verificationToken.token}`;
         console.log(url);
 
-        await sendEmail(email, 'Verify your email', `Click the link below to verify your email: ${url}`);
+        await sendEmail(email, 'Verify your email', url);
 
         res.status(201).send({ 
             status: 'success',
@@ -61,26 +61,5 @@ router.post('/', async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 });
-
-router.get('/:id/verify/:token', async (req, res) => {
-    try {
-        const user = await User.findOne({ _id: req.params.id});
-
-        const token = await Token.findOne({ 
-            userId: req.params.id, 
-            token: req.params.token 
-        });
-
-        if (!user || !token) return res.status(400).send({ message: 'invalid link'});
-
-        await User.updateOne({ _id: user._id, verified: true});
-        await token.remove();
-
-        return res.status(200).send({ message: 'Email verified successfully' });
-
-    } catch (error) {
-        return res.status(500).send({ message:'Internal server error: ' + error.message });
-    }
-})
 
 export default router

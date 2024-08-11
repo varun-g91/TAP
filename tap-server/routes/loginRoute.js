@@ -2,11 +2,10 @@ import express from 'express';
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import { validateLogin } from '../validation/loginValidation.js';
-import jwt from 'jsonwebtoken'; 
+import jwt from 'jsonwebtoken';
 import sendEmail from '../utils/sendEmail.js';
 import Token from '../models/token.js';
-import crypto from 'crypto'
-
+import crypto from 'crypto';
 
 const router = express.Router();
 
@@ -22,12 +21,18 @@ router.post('/', async (req, res) => {
             $or: [{ email: identifier }, { userName: identifier }],
         });
 
-        // Check if the user exists and the password is correct
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ status: 'error', message: 'Invalid Password' });
+        // Handle case where user is not found
+        if (!user) {
+            return res.status(401).json({ status: 'error', message: 'User not found' });
         }
 
+        // Check if the password is correct
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ status: 'error', message: 'Invalid password' });
+        }
+
+        // Check if the user's email is verified
         if (!user.verified) {
             let token = await Token.findOne({ userId: user._id });
             if (!token) {
@@ -36,13 +41,10 @@ router.post('/', async (req, res) => {
                     token: crypto.randomBytes(16).toString('hex'),
                 }).save();
 
-                // Ensure the email variable is correctly assigned
                 const email = user.email;
-
-                // Construct the URL
                 const url = `${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`;
 
-                await sendEmail(email, 'Verify your email', `Click the link below to verify your email: ${url}`);
+                await sendEmail(email, url);
             }
 
             return res.status(401).json({ status: 'error', message: 'Email not verified. Check your inbox for the verification link.' });
