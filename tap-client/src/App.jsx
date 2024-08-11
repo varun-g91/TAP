@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import "./global.css";
+import "./index.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./components/Home";
+import Home from "./pages/Home";
+import VerificationPage from "./pages/VerificationPage";
 import ContactForm from "./components/ContactForm";
 import Modal from "./components/Modal";
 
@@ -24,20 +27,34 @@ function App() {
     };
 
     return (
-        <div className="desktop-52">
-            <Header />
-            <Home togglePopup={togglePopup} />
-            <Footer />
-            {showPopup && (
-                <ContactForm
-                    closePopup={togglePopup}
-                    showModal={showModalHandler}
-                />
-            )}
-            {showModal && (
-                <Modal message={modalMessage} closeModal={closeModalHandler} />
-            )}
-        </div>
+        <Router>
+            <div className="desktop-52">
+                <Header />
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<Home togglePopup={togglePopup} />}
+                    />
+                    <Route
+                        path="/users/:userId/verify/:token"
+                        element={<VerificationPage />}
+                    />
+                </Routes>
+                <Footer />
+                {showPopup && (
+                    <ContactForm
+                        closePopup={togglePopup}
+                        showModal={showModalHandler}
+                    />
+                )}
+                {showModal && (
+                    <Modal
+                        message={modalMessage}
+                        closeModal={closeModalHandler}
+                    />
+                )}
+            </div>
+        </Router>
     );
 }
 
