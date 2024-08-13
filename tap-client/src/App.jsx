@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./global.css";
 import "./index.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -7,6 +6,7 @@ import Home from "./pages/Home";
 import VerificationPage from "./pages/VerificationPage";
 import ContactForm from "./components/ContactForm";
 import Modal from "./components/Modal";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
     const [showPopup, setShowPopup] = useState(false);

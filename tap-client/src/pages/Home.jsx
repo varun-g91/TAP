@@ -1,5 +1,5 @@
 import React from "react";
-import Tooltip from "./ToolTip";
+import Tooltip from "../components/ToolTip";
 import bubbleImage from "../../public/bubbleremovebgpreview-1-1@2x.png"; // Import the image
 import starIcon from "../../public/iconlysharpboldstar.svg";
 import monitorIcon from "../../public/monitor.svg";
