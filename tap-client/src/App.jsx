@@ -31,10 +31,7 @@ function App() {
             <div className="desktop-52">
                 <Header />
                 <Routes>
-                    <Route
-                        path="/"
-                        element={<Home togglePopup={togglePopup} />}
-                    />
+                    <Route path="/" element={<Home togglePopup={togglePopup} />} />
                     <Route
                         path="/users/:userId/verify/:token"
                         element={<VerificationPage />}
@@ -42,16 +39,10 @@ function App() {
                 </Routes>
                 <Footer />
                 {showPopup && (
-                    <ContactForm
-                        closePopup={togglePopup}
-                        showModal={showModalHandler}
-                    />
+                    <ContactForm closePopup={togglePopup} showModal={showModalHandler} />
                 )}
                 {showModal && (
-                    <Modal
-                        message={modalMessage}
-                        closeModal={closeModalHandler}
-                    />
+                    <Modal message={modalMessage} closeModal={closeModalHandler} />
                 )}
             </div>
         </Router>
