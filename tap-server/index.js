@@ -8,9 +8,9 @@ import process from 'process';
 import dotenv from 'dotenv';
 import connectToDB from './db/connectToDb.js';
 
-dotenv.config();
 
 const app = express();
+dotenv.config().parsed;
 
 const PORT = process.env.PORT;
 
