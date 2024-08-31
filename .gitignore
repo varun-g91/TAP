@@ -38,8 +38,10 @@ Thumbs.db
 .vscode/
 
 tap-server/config.js
-
+tap-server/node_modules
 tap-server/package-lock.json
 tap-server/package.json
 tap-server/vars.env
-tap-server/node_modules/.package-lock.json
+
+tap-server/node_modules/axios/CHANGELOG.md
+tap-server/node_modules/axios/dist/axios.js
