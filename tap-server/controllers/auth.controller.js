@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { errorHandler } from "../middleware/errorHandler.js";
-import { validateEmail, validateLogin, validatePassword, validateUsername } from "../middleware/validatiors.js";
+import { validateEmail, validateLogin, validatePassword, validateUsername } from "../middleware/validators.js";
 import User from "../models/userModel.js";
 import { generateTokenAndSetCookie } from "../utils/generateToken.js";
 
