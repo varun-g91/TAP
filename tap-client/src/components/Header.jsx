@@ -16,17 +16,14 @@ const Header = () => {
         <header >
             <nav className="nav-parent">
                 <div className="btn-parent">
-                    <div className="sign-up-wrapper">
+                    {/* <div className="sign-up-wrapper">
                         <button className="btn">Sign Up</button>
                     </div>
                     <div className="members-login-wrapper"> 
-                        <button className="btn">Member’s Login</button></div>
+                        <button className="btn">Member’s Login</button></div> */}
                     <div className="contact-sales-wrapper">
                         <button className="btn">Contact Sales</button>
                     </div>
-                    
-                    {/* <a className="members-login">Member’s Login</a>
-                    <a className="sign-up">Sign up</a> */}
                 </div>
                 
                 <img

@@ -45,6 +45,10 @@ html {
   scroll-behavior: smooth;
   font-family: var(--p);
 }
+.body {
+  position: relative;
+  min-height: 100vh;
+}
 
 header {
   position: relative;
@@ -67,7 +71,7 @@ header .logo {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  height: 95px;
+  height: 90px;
 }
 
 .btn-parent {
@@ -93,13 +97,6 @@ header .logo {
   align-items: center;
   justify-content: center;
 
-}
-
-.body {
-  position: relative;
-  /* background-color: #6d7590; */
-  min-height: 100vh;
-  /* overflow: visible; */
 }
 
 .red {
@@ -199,6 +196,7 @@ header .logo {
   cursor: pointer;
   font-family: var(--font-roboto);
   color: var(--color-darkslateblue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   background-color: white;
   border-radius: 7px;
   font-weight: 500;
@@ -211,7 +209,7 @@ header .logo {
 
 .benefits {
   position: absolute;
-  top: 68%;
+  top: 70%;
   left: 15%;
   border-radius: 10px;
   font-size: var(--font-size-mini);
@@ -222,7 +220,6 @@ header .logo {
   height: 11%;
   line-height: 24px;
   z-index: 1;
-
 }
 
 .quality-education,
@@ -369,7 +366,7 @@ header .logo {
   bottom: 50px; /* Adjust this value to position vertically */
   right: 180px; /* Adjust this value to position horizontally */
   display: flex;
-  gap: 15px; /* Space between each link */
+  gap: 15px; 
 }
 
 .footer-right-links a {
@@ -423,6 +420,268 @@ header .logo {
   font-family: var(--p);
   font-weight: 600;
   text-align: center;
+}
+
+.contact-popup-container {
+  align-content: center;
+  top: 0;
+  background: rgba(0, 0, 0, 0.17);
+  /* color: #392368; */
+  width: 100vw;
+}
+
+.contact-popup {
+  position: relative;
+  background-color: #fff;
+  width: 75vw;
+  margin: 141px 138.35px;
+  top: 0;
+  left: 3rem;
+  color: #392368;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 70px;
+  display: grid;
+  font-family: Roboto;
+}
+
+.contact-popup input {
+  font-family: Poppins;
+  color: #392368;
+  font-weight: 600;
+}
+
+.contact-popup input:focus {
+  color: #392368;
+  font-weight: 600;
+  font-size: medium;
+}
+
+.contact-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  margin-top: 0;
+  position: relative;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 80px;
+  font-size: 55px;
+  text-shadow: 0px 3px 3px #a9a9a9;
+  font-weight: 600;
+}
+
+.personal-info {
+  /* display: flex; */
+  /* z-index: 2; */
+  /* position: relative; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  place-items: center;
+  font-family: Poppins;
+  font-size: 14px;
+}
+
+.last-name,
+.phone-number {
+  margin-right: 200px;
+}
+
+.non-active {
+  display: none;
+}
+
+.personal-info input {
+  font-size: 24px;
+}
+
+.personal-info input:focus {
+  outline: none;
+  font-size: 24px;
+}
+
+.select-container {
+  position: relative;
+  height: 40px;
+  margin: 50px 0;
+  display: flex;
+  align-items: center;
+  color-scheme: light dark;
+}
+
+.select-container svg {
+  position: absolute;
+  right: calc(50% + 150px);
+  transform: rotate(180deg);
+}
+
+#organizationType option {
+  background-color: #ad9ad6;
+  padding: 20px;
+  line-height: 30px;
+  margin-left: 10px;
+}
+
+#organizationType option:checked,
+#organizationType option[selected] {
+  background-color: #392368;
+  color: white;
+}
+
+#organizationType:hover,
+/* Remove hover effect for Firefox */
+#organizationType:hover option {
+  /* Remove hover effect for options in other browsers */
+  background-color: inherit;
+  /* Ensure hover doesn't change background */
+  color: inherit;
+  /* Ensure hover doesn't change text color */
+}
+
+.selected-select {
+  display: none;
+}
+
+#organizationType option:hover {
+  background-color: #392368;
+  color: #fff;
+}
+
+#organizationType {
+  z-index: 2;
+  position: relative;
+  color: #392368;
+  appearance: none;
+  margin: 40px 130px;
+  background-color: transparent;
+  border: none;
+  width: 300px;
+  font-weight: 550;
+  font-size: large;
+  color-scheme: light;
+  font-size: 19.29px;
+}
+
+#organizationType:active {
+  color: #fff;
+}
+
+#organizationType:focus {
+  outline: none;
+  color: #392368;
+}
+
+.work-exp {
+  position: relative;
+  left: 10%;
+  font-size: 16px;
+  /* Adjust the size as needed */
+  line-height: 1.5;
+  /* Better readability */
+  padding: 10px;
+  /* Add some padding for spacing */
+  color: var(--color-darkslateblue);
+  /* Example color */
+  font-family: var(--font-roboto);
+  /* Ensure consistent font family */
+  white-space: pre-wrap;
+  /* Preserve whitespace for preformatted text */
+}
+
+#workExperience {
+  color: red;
+  font-size: 1rem;
+  display: flex;
+  margin-top: 1rem;
+}
+
+#workExperienceHead {
+  font-weight: 550;
+  font-size: 19px;
+}
+
+.work-exp label {
+  padding: 10px 27px;
+  /* display: flex; */
+}
+
+
+.message {
+  margin: 20px 130px;
+  background-color: transparent;
+  border: none;
+  z-index: 2;
+  width: 800px;
+  font-size: large;
+}
+
+.message textarea {
+  background-color: transparent;
+  border: none;
+  font-size: large;
+  width: 800px;
+}
+
+.message textarea:focus {
+  outline: none;
+  color: #392368;
+  font-size: x-large;
+}
+
+.submit {
+  text-align: center;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  padding: 20px;
+}
+
+.submit input {
+  display: none;
+}
+
+.submit button {
+  background-color: #392368;
+  padding: 10px 40px;
+  font-size: large;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.close {
+  font-size: xxx-large;
+  font-weight: 500;
+  z-index: 2;
+  margin-top: 10px;
+  text-align: end;
+  border: none;
+  margin-right: 50px;
+  background-color: transparent;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+#orgType {
+  margin-top: 0;
+}
+
+.error-msg {
+  margin-top: 1rem;
+  color: red;
+  font-size: 1rem;
+  display: flex;
+}
+
+
+.ml-148 {
+  margin-left: 148px;
 }
 
 
@@ -479,13 +738,127 @@ body.modal-open {
 /* media queries */
 
 @media (max-width: 480px) {
-  .footerline {
-    flex-direction: column;
-    font-size: 12px;
-    align-items: center;
-    gap: 10px; /* Adjust space between links */
-  }
 
+  html{
+    font-size: 1.5rem;
+  }
+  header{
+    font-size: var(--font-size-sm);
+  }
+  header .logo{
+    width: 100px;
+    height: 50px;
+    top: 23px;
+    left: 10px;
+  }
+  .btn{
+    padding: 5px;
+    height: 30px;
+    font-size: 10px;
+    border-radius: 5px;
+  }
+  .red{
+    width: 200px;
+    height: 200px;
+    left: 55%;
+    top:20%;
+    filter: blur(120px);
+  }
+  .blue{
+    left:45%;
+    top: 50%;
+    width: 250px;
+    height: 250px;
+    filter: blur(150px);
+  }
+  .purple{
+    top: 50%;
+    width: 250px;
+    height: 300px;
+    filter: blur(150px);
+  }
+  .bubble {
+    top: 5%;
+    left: 50%;
+  }
+  .take-a-new{
+    left: 4%;
+    top: 10%;
+    font-size: 30px;
+    width: 200px;
+  }
+  .unlock{
+    font-size: 15px;
+    top: 21%;
+    left: 4% ;
+    line-height: 30px;
+  }
+  .we-help-pivot{
+    top: 31%;
+    font-size: 13px;
+    left: 4%;
+    line-height: 25px;
+  }
+  .get-started{
+    padding: 10px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 5px;
+    top: 42%;
+    left: 4%;
+  }
+  .benefits{
+    top: 53%;
+    left: 2.5%;
+    font-size: 11px;
+    width: 95%;
+    line-height: 15px;
+    text-align: center;
+  }
+  .quality-education,
+  .interactive-engaging,
+  .performance-tracking,
+  .compliance-certification {
+    top: 50%;
+  }
+  .quality-education {
+    left: 0;
+  }
+  
+  .interactive-engaging {
+    left: 18%;
+  }
+  
+  .performance-tracking {
+    left: 38.5%;
+  }
+  
+  .compliance-certification {
+    left: 60%;
+    width: 21%;
+  }
+  .iconlysharpboldstar,.monitor-icon,.icontrophy{
+    width: 5%;
+    top: 15%;
+  }
+  .iconsolidlight-bulb{
+    width: 6%;
+    top: 13%;
+  }
+  .line,.line1,.line2{
+    height: 50px;
+    top: 19%;
+  }
+  .line2{
+    left: 59%;
+  }
+  .member-benefits{
+    padding: 10px;
+    height: 30px;
+    font-size: 10px;
+    border-radius: 5px;
+    top: 30%;
+  }
   .footer-right-links {
     display: flex;
     flex-direction: column;
@@ -496,6 +869,12 @@ body.modal-open {
     gap: 10px; /* Space between each link */
   }
 
+  .footerline {
+    flex-direction: row;
+    font-size: 12px;
+    align-items: center;
+    gap: 15px; /* Adjust space between links */
+  }
   .social-media-icons {
     gap: 10px;
     margin-bottom: 10px;
