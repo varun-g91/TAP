@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import "../index.css";
 import axios from "axios";
-
-const ContactForm = ({ closePopup, showModal }) => {
+import CustomDropdown from "./CustomDropdown";
+const ContactForm = ({ closePopup }) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -12,265 +13,314 @@ const ContactForm = ({ closePopup, showModal }) => {
         message: "",
     });
 
+    const toggleOrganizationType = (option) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            organizationType: option,
+        }));
+    };
+
+
+    const organizationTypes = [
+        "Corporate",
+        "Non-Profit Organization",
+        "Entrepreneur",
+        "Government",
+        "Academia",
+    ];
+
     const [errors, setErrors] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // Validation logic
+        const updatedErrors = { ...errors };
+        const validationError = validateField(name, value);
+        if (validationError) {
+            updatedErrors[name] = validationError;
+        } else {
+            delete updatedErrors[name];
+        }
+        setErrors(updatedErrors);
+    };
+
+    const handleFocus = (e) => {
+        e.target.classList.add("focused");
+    };
+
+    const handleBlur = (e) => {
+        if (!e.target.value) {
+            e.target.classList.remove("focused");
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateForm(formData);
+        setErrors(validationErrors);
+        setIsSubmitted(true);
+
         if (Object.keys(validationErrors).length === 0) {
             console.log("Form Data:", formData);
-            setFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                phoneNumber: "",
-                organizationType: "",
-                workExperience: "",
-                message: "",
-            });
-            // Make API call to submit form data
             axios
                 .post("http://localhost:5555/api/tap-server/enquirer", formData)
-                .then(() => {
-                    console.log("Form submitted successfully!");
+                .then((response) => {
+                    console.log("Form submitted:", response.data);
                     closePopup();
-                    console.log("Calling showModal with success message");
-                    showModal("We will get back to you shortly.");
                 })
                 .catch((error) => {
                     console.error("Error submitting form:", error);
-                    console.log("Calling showModal with error message");
-                    showModal(
-                        "There was an error submitting your form. Please try again later."
-                    );
                 });
-        } else {
-            setErrors(validationErrors);
         }
+    };
+
+    const validateField = (name, value) => {
+        switch (name) {
+            case "firstName":
+                if (!value) return "First name is required";
+                break;
+            case "lastName":
+                if (!value) return "Last name is required";
+                break;
+            case "email":
+                if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+                    return "Valid email is required";
+                break;
+            case "phoneNumber":
+                if (!value || !/^\d{10}$/.test(value))
+                    return "Valid phone number is required";
+                break;
+            case "organizationType":
+                if (!value) return "Organization type is required";
+                break;
+            case "workExperience":
+                if (!value) return "Work experience is required";
+                break;
+            case "message":
+                if (!value) return "Message is required";
+                break;
+            default:
+                return null;
+        }
+        return null;
     };
 
     const validateForm = (data) => {
         const errors = {};
-        if (!data.firstName) errors.firstName = "First name is required";
-        if (!data.lastName) errors.lastName = "Last name is required";
-        if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
-            errors.email = "Valid email is required";
-        if (!data.phoneNumber || !/^\d{10}$/.test(data.phoneNumber))
-            errors.phoneNumber = "Valid phone number is required";
-        if (!data.organizationType)
-            errors.organizationType = "organization type is required";
-        if (!data.workExperience)
-            errors.workExperience = "Work experience is required";
-        if (!data.message) errors.message = "Message is required";
+        Object.keys(data).forEach((key) => {
+            const error = validateField(key, data[key]);
+            if (error) errors[key] = error;
+        });
         return errors;
     };
 
-    const handleOverlayClick = (e) => {
-        if (e.target.className === "contact-popup-container") {
-            closePopup();
-        }
-    };
-
     return (
-        <div className="contact-popup-container" onClick={handleOverlayClick}>
-            <div className="contact-popup" onClick={(e) => e.stopPropagation()}>
-                <button id="closepop" className="close" onClick={closePopup}>
+        <div
+            className="overlay"
+            onClick={(e) => e.target.className === "overlay" && closePopup()}
+        >
+            <div className="form-container">
+                <button className="close-button" onClick={closePopup}>
                     &times;
                 </button>
-                <form id="form" onSubmit={handleSubmit}>
-                    <h2 className="contact-heading">Tell us your needs!</h2>
-                    <div className="personal-info">
-                        <div className="first-name">
-                            <p>First name</p>
+                <h2 className="form-heading">Tell us your needs!</h2>
+                <form onSubmit={handleSubmit} className="contact-form">
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label
+                                className={`form-label ${
+                                    formData.firstName ? "active" : ""
+                                }`}
+                            >
+                                First Name*
+                            </label>
                             <input
                                 type="text"
                                 name="firstName"
-                                id="first-name"
                                 value={formData.firstName}
                                 onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className={`form-input ${
+                                    errors.firstName ? "input-error" : ""
+                                }`}
+                                style={{ height: "50px", marginBottom: "20px" }}
                             />
-                            <hr style={{ border: "1px solid" }} />
-                            {errors.firstName && (
-                                <p className="error-msg">{errors.firstName}</p>
-                            )}
+                            <span className="error-message">
+                                {errors.firstName || "\u00A0"}
+                            </span>
                         </div>
-                        <div className="last-name">
-                            <p>Last name</p>
+                        <div className="form-group">
+                            <label
+                                className={`form-label ${
+                                    formData.lastName ? "active" : ""
+                                }`}
+                            >
+                                Last Name*
+                            </label>
                             <input
                                 type="text"
                                 name="lastName"
-                                id="last-name"
                                 value={formData.lastName}
                                 onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className={`form-input ${
+                                    errors.lastName ? "input-error" : ""
+                                }`}
+                                style={{ height: "50px", marginBottom: "20px" }}
                             />
-                            <hr style={{ border: "1px solid" }} />
-                            {errors.lastName && (
-                                <p className="error-msg">{errors.lastName}</p>
-                            )}
+                            <span className="error-message">
+                                {errors.lastName || "\u00A0"}
+                            </span>
                         </div>
-                        <div className="email">
-                            <p>Email</p>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group ">
+                            <div className="form-label">
+                                <label htmlFor="email">Email*</label>
+                            </div>
                             <input
                                 type="email"
                                 name="email"
-                                id="email"
-                                value={formData.email}
+                                value={formData.ema9il}
                                 onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className={`form-input ${
+                                    errors.email ? "input-error" : ""
+                                }`}
+                                style={{ height: "50px", marginBottom: "20px" }}
                             />
-                            <hr style={{ border: "1px solid" }} />
-                            {errors.email && (
-                                <p className="error-msg">{errors.email}</p>
-                            )}
+                            <span className="error-message">
+                                {errors.email || "\u00A0"}
+                            </span>
                         </div>
-                        <div className="phone-number">
-                            <p>Phone number</p>
+                        <div className="form-group">
+                            <label htmlFor="phoneNumber">Phone Number*</label>
                             <input
-                                type="text"
+                                type="tel"
                                 name="phoneNumber"
-                                id="phone-number"
                                 value={formData.phoneNumber}
                                 onChange={handleChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                className={`form-input ${
+                                    errors.phoneNumber ? "input-error" : ""
+                                }`}
+                                style={{ height: "50px", marginBottom: "20px" }}
                             />
-                            <hr style={{ border: "1px solid" }} />
-                            {errors.phoneNumber && (
-                                <p className="error-msg">
-                                    {errors.phoneNumber}
-                                </p>
-                            )}
+                            <span className="error-message">
+                                {errors.phoneNumber || "\u00A0"}
+                            </span>
                         </div>
                     </div>
-                    <div className="select-container">
-                        <select
-                            name="organizationType"
-                            id="organizationType"
-                            value={formData.organizationType}
-                            onChange={handleChange}
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "start   ",
+                            maxWidth: "fit-content",
+                            maxHeight: "48px",
+                            marginTop: "0px",
+                            marginBottom: "60px",
+                        }}
+                    >
+                        <CustomDropdown
+                            options={organizationTypes}
+                            toggleOrganizationType={toggleOrganizationType}
+                            error={errors.organisationType}
+                        />
+                        <span 
+                            className="error-message" 
+                            style={{ position: "relative", top: "50px", right: "5rem" }}
                         >
-                            <option value="">Your organization type</option>
-                            <option value="Corporate">Corporate</option>
-                            <option value="Non-Profit Organization">
-                                Non-Profit Organization
-                            </option>
-                            <option value="Entrepreneur">Entrepreneur</option>
-                            <option value="Government">Government</option>
-                            <option value="Academia">Academia</option>
-                        </select>
-                        <svg
-                            width="23"
-                            height="12"
-                            viewBox="0 0 23 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M22.722 11.2261C22.9154 11.0092 23.0147 10.7245 22.9982 10.4346C22.9817 10.1447 22.8508 9.8731 22.6341 9.67942L12.9219 0.645798C12.7208 0.466932 12.4608 0.368108 12.1914 0.368108C11.9221 0.368108 11.6621 0.466932 11.4609 0.645798L1.40023 9.67942C1.28394 9.77261 1.18786 9.88846 1.11786 10.0199C1.04785 10.1514 1.00538 10.2957 0.993031 10.4441C0.980683 10.5925 0.998716 10.7418 1.04603 10.883C1.09335 11.0242 1.16895 11.1543 1.26825 11.2654C1.36754 11.3765 1.48844 11.4662 1.62358 11.5291C1.75872 11.592 1.90528 11.6268 2.05431 11.6313C2.20335 11.6359 2.35175 11.61 2.49048 11.5555C2.6292 11.5009 2.75535 11.4187 2.86123 11.3138L12.0117 3.19668L21.1731 11.3248C21.3917 11.5165 21.6776 11.6138 21.968 11.5953C22.2584 11.5768 22.5296 11.444 22.722 11.2261Z"
-                                fill="#121212"
-                            />
-                        </svg>
-                        {errors.organizationType && (
-                            <p className="error-msg" id="orgType">
-                                {errors.organizationType}
-                            </p>
-                        )}
+                            {errors.organizationType || "\u00A0"}
+                        </span>
                     </div>
-                    <div className="work-exp">
-                        <p id="workExperienceHead">Work Experience</p>
-                        <label htmlFor="1-5" style={{ paddingLeft: "0px" }}>
-                            <input
-                                type="radio"
-                                name="workExperience"
-                                id="1-5"
-                                value="1-5 years"
-                                checked={
-                                    formData.workExperience === "1-5 years"
-                                }
-                                onChange={handleChange}
-                            />
-                            1-5 years
-                        </label>
-                        <label htmlFor="5-10">
-                            <input
-                                type="radio"
-                                name="workExperience"
-                                id="5-10"
-                                value="5-10 years"
-                                checked={
-                                    formData.workExperience === "5-10 years"
-                                }
-                                onChange={handleChange}
-                            />
-                            5-10 years
-                        </label>
-                        <label htmlFor="10-15">
-                            <input
-                                type="radio"
-                                name="workExperience"
-                                id="10-15"
-                                value="10-15 years"
-                                checked={
-                                    formData.workExperience === "10-15 years"
-                                }
-                                onChange={handleChange}
-                            />
-                            10-15 years
-                        </label>
-                        <label htmlFor="15-20">
-                            <input
-                                type="radio"
-                                name="workExperience"
-                                id="15-20"
-                                value="15-20 years"
-                                checked={
-                                    formData.workExperience === "15-20 years"
-                                }
-                                onChange={handleChange}
-                            />
-                            15-20 years
-                        </label>
-                        <label
-                            htmlFor="cxo-level"
-                            style={{ paddingRight: "25px" }}
+
+                    <div
+                        className="form-group"
+                        id="work-experience"
+                        style={{ marginBottom: "20px" }}
+                    >
+                        <label className="form-label">Work Experience*</label>
+                        <div className="experience-options">
+                            {[
+                                "1-5 Years",
+                                "5-10 Years",
+                                "10-15 Years",
+                                "15-20 Years",
+                                "CXO level",
+                            ].map((exp) => (
+                                <p key={exp} className="experience-label">
+                                    <input
+                                        type="radio"
+                                        name="workExperience"
+                                        value={exp}
+                                        className="experience-radio"
+                                        checked={
+                                            formData.workExperience === exp
+                                        }
+                                        onChange={handleChange}
+                                    />
+                                    {exp}
+                                </p>
+                            ))}
+                        </div>
+                        <span
+                            className="error-message"
+                            style={{ position: "relative", top: "4px" }}
                         >
-                            <input
-                                type="radio"
-                                name="workExperience"
-                                id="cxo-level"
-                                value="CXO level"
-                                checked={
-                                    formData.workExperience === "CXO level"
-                                }
-                                onChange={handleChange}
-                            />
-                            CXO level
-                        </label>
-                        {errors.workExperience && (
-                            <p className="error-msg" id="workExperience">
-                                {errors.workExperience}
-                            </p>
-                        )}
+                            {errors.workExperience || "\u00A0"}
+                        </span>
                     </div>
-                    <div className="message">
-                        <p>Message</p>
-                        <textarea
+                    <div
+                        className="form-group message"
+                        style={{
+                            display: "flex",
+                            maxHeight: "fit-content",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <label htmlFor="message">Message*</label>
+                        <input
                             name="message"
-                            id="message"
-                            rows="2"
                             value={formData.message}
                             onChange={handleChange}
-                        ></textarea>
-                        <hr style={{ border: "1px solid" }} />
-                        {errors.message && (
-                            <p className="error-msg">{errors.message}</p>
-                        )}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            className={`form-input ${
+                                errors.message ? "input-error" : ""
+                            }`}
+                            style={{
+                                marginTop: "30px", 
+                            }}
+                            rows="4"
+                        />
+                        <span
+                            className="error-message"
+                            style={{
+                                position: "relative",
+                                top: "0px",
+                            }}
+                        >
+                            {errors.message || "\u00A0"}
+                        </span>
                     </div>
-                    <div className="submit">
-                        <button type="submit" id="submit">
-                            Send Inquiry
-                        </button>
+                    <div className="button-group">
+                        <div></div>
+                        <div className="submit-button">
+                            <button type="submit">
+                                <span className="send-inquiry">
+                                    Send Inquiry
+                                </span>
+                            </button>
+                        </div>
+                        <div></div>
                     </div>
                 </form>
             </div>
