@@ -35,7 +35,7 @@
 }
 
 .desktop-52 {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 html {
@@ -153,7 +153,6 @@ header .logo {
     /* Move up by 10px */
   }
 }
-
 
 .take-a-new {
   position: absolute;
@@ -422,268 +421,357 @@ header .logo {
   text-align: center;
 }
 
-.contact-popup-container {
-  align-content: center;
-  top: 0;
-  background: rgba(0, 0, 0, 0.17);
-  /* color: #392368; */
-  width: 100vw;
+/* Contact Form */
+
+/* Overlay for the modal */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.contact-popup {
-  position: relative;
-  background-color: #fff;
-  width: 75vw;
-  margin: 141px 138.35px;
-  top: 0;
-  left: 3rem;
-  color: #392368;
-  background-size: cover;
-  overflow: hidden;
-  border-radius: 70px;
-  display: grid;
-  font-family: Roboto;
+/* Container for the form */
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1130px;
+    position: absolute;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 1.4rem;
+    overflow: hidden;
+    max-height: 870px;
+    height: 100%;
+    scale: 0.87;
+    font-family: var(--font-roboto);
 }
 
-.contact-popup input {
-  font-family: Poppins;
-  color: #392368;
-  font-weight: 600;
+/* Close button */
+.close-button {
+    position: absolute;
+    top: 30px;
+    right: 70px;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    max-width: fit-content;
+    width: 100%;
+    color: #392368;
 }
 
-.contact-popup input:focus {
-  color: #392368;
-  font-weight: 600;
-  font-size: medium;
+/* Form heading */
+.form-heading {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #392368;  
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.34); /* Add shadow */
 }
 
-.contact-heading {
+/* Form layout */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0px 128px 0px 128px;
+    font-family: var(--font-roboto);
+}
+
+/* Rows for inputs (2 columns) */
+.form-row {
+    display: flex;
+    gap: 50px;
+}
+
+/* Each form-group should remain constant in height */
+.form-group {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: #392368;
+}
+/* Shrink label when input is focused or contains value */
+/* Input fields */
+.form-input {
+    border: none;
+    border-bottom: 2px solid #392368;
+    font-size: 20px;
+    /* color: #392368; */
+    transition: border 0.3s, color 0.3s;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.form-group label{
+    color: #392368;  
+    font-size: 20px;
+    font-family: var(--font-roboto);
+    display: flex;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.2s ease all;
+
+}
+
+
+
+/* Error Message Styling */
+.error-message {
+    color: red;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 6px;
+    height: 18px;
+    font-family: var(--font-roboto);
+    position: relative;
+    top: -15px;
+}
+
+/* Experience options layout */
+.experience-options {
+  margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Individual experience labels */
+.experience-label {
+    display: flex;
+    font-size: 18px;
+    color: #392368;
+    font-family: var(--font-roboto);
+}
+
+/* Radio button style */
+.experience-radio {
+    margin-right: 10px;
+}
+/* Submit button and Inquiry */
+.submit-button {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    top: 20px;
+}
+
+
+
+.submit-button button {
+    background-color: #392368;
+    color: white;
+    border-radius: 7px;
+    width: 284.13px;
+    height: 49px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-family: var(--font-roboto);
+    font-weight: 550;
+    letter-spacing: 0.4px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+
+.send-inquiry {
+    display: block;
+    margin: auto;
+    height: 60px;
+    line-height: 60px;
+} 
+
+/* Error Message Styling */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    height: 18px; /* Reserve space for the error message */
+    font-family: var(--font-roboto);
+}
+
+
+
+/* Optional: add focus styling to error inputs */
+.input-error:focus {
+    outline: none;
+    
+}
+
+/* CSS for CustomDropdown component */
+
+/* Container for dropdown */
+/* Only apply the floating label style to the dropdown */
+.form-group.dropdown-group label.active {
+    top: -20px;  /* Move the label upwards when active */
+    font-size: 12px;
+    color: #666;
+    transition: 0.2s ease all;
+}
+
+.form-group.dropdown-group label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #999;
+    transition: 0.2s ease all;
+    pointer-events: none; /* Disable interaction with the label */
+}
+
+/* Fix the layout for other labels in form */
+
+
+/* Updated Dropdown Styling */
+.dropdown-container {
+    position: relative; 
+    width: 359px;
+    max-height: 48px;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.experience-radio {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #c4a8ff;
+    background-color: #c4a8ff;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+
+.experience-radio:checked {
+     background-color: #392368;
+    border-color: #392368;
+}
+
+.experience-radio:checked::after {
+    content: '';
+    position: absolute;
+   
+}
+
+.experience-radio:disabled + .experience-label {
+    color: #ccc;
+}
+
+
+
+
+.dropdown-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #ffffff;
+    font-size: 16px; /* Slightly larger text size */
+    /* padding: 10px 15px; */
+    cursor: pointer;
+    color: #392368;
+    font-family: var(--font-roboto);
+    font-weight: 600;
+    border-radius: 4px; /* Softer rounded corners */
+    transition: border-color 0.3s ease;
+}
+
+.dropdown-arrow {
+  margin-top: 5px;  
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
-  margin-top: 0;
-  position: relative;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  line-height: 80px;
-  font-size: 55px;
-  text-shadow: 0px 3px 3px #a9a9a9;
-  font-weight: 600;
-}
-
-.personal-info {
-  /* display: flex; */
-  /* z-index: 2; */
-  /* position: relative; */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  place-items: center;
-  font-family: Poppins;
-  font-size: 14px;
-}
-
-.last-name,
-.phone-number {
-  margin-right: 200px;
-}
-
-.non-active {
-  display: none;
-}
-
-.personal-info input {
-  font-size: 24px;
-}
-
-.personal-info input:focus {
-  outline: none;
-  font-size: 24px;
-}
-
-.select-container {
-  position: relative;
-  height: 40px;
-  margin: 50px 0;
-  display: flex;
-  align-items: center;
-  color-scheme: light dark;
-}
-
-.select-container svg {
-  position: absolute;
-  right: calc(50% + 150px);
-  transform: rotate(180deg);
-}
-
-#organizationType option {
-  background-color: #ad9ad6;
-  padding: 20px;
-  line-height: 30px;
-  margin-left: 10px;
-}
-
-#organizationType option:checked,
-#organizationType option[selected] {
-  background-color: #392368;
-  color: white;
-}
-
-#organizationType:hover,
-/* Remove hover effect for Firefox */
-#organizationType:hover option {
-  /* Remove hover effect for options in other browsers */
-  background-color: inherit;
-  /* Ensure hover doesn't change background */
-  color: inherit;
-  /* Ensure hover doesn't change text color */
-}
-
-.selected-select {
-  display: none;
-}
-
-#organizationType option:hover {
-  background-color: #392368;
-  color: #fff;
-}
-
-#organizationType {
-  z-index: 2;
-  position: relative;
-  color: #392368;
-  appearance: none;
-  margin: 40px 130px;
-  background-color: transparent;
-  border: none;
-  width: 300px;
-  font-weight: 550;
-  font-size: large;
-  color-scheme: light;
-  font-size: 19.29px;
-}
-
-#organizationType:active {
-  color: #fff;
-}
-
-#organizationType:focus {
-  outline: none;
-  color: #392368;
-}
-
-.work-exp {
-  position: relative;
-  left: 10%;
-  font-size: 16px;
-  /* Adjust the size as needed */
-  line-height: 1.5;
-  /* Better readability */
-  padding: 10px;
-  /* Add some padding for spacing */
-  color: var(--color-darkslateblue);
-  /* Example color */
-  font-family: var(--font-roboto);
-  /* Ensure consistent font family */
-  white-space: pre-wrap;
-  /* Preserve whitespace for preformatted text */
-}
-
-#workExperience {
-  color: red;
-  font-size: 1rem;
-  display: flex;
-  margin-top: 1rem;
-}
-
-#workExperienceHead {
-  font-weight: 550;
-  font-size: 19px;
-}
-
-.work-exp label {
-  padding: 10px 27px;
-  /* display: flex; */
+  max-width: fit-content;
 }
 
 
-.message {
-  margin: 20px 130px;
-  background-color: transparent;
-  border: none;
-  z-index: 2;
-  width: 800px;
-  font-size: large;
+
+.dropdown-title {
+    font-size: 22px;
+    max-width: fit-content;
+    display: flex;
 }
 
-.message textarea {
-  background-color: transparent;
-  border: none;
-  font-size: large;
-  width: 800px;
+.dropdown-options {
+    position: absolute;
+    background-color: #ad9ad6; /* Purple background for options */
+    width: 100%;
+    top: 50px; /* Positioned below the header */
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+    padding: 0; /* Remove extra padding around options */
 }
 
-.message textarea:focus {
-  outline: none;
-  color: #392368;
-  font-size: x-large;
+.dropdown-option {
+    padding: 12px 15px;
+    color: #fff; /* White text for options */
+    font-size: 16px; /* Consistent font size with header */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.submit {
-  text-align: center;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-  padding: 20px;
+.dropdown-option:hover {
+    background-color: #2b1a4e; /* Darker purple on hover */
 }
 
-.submit input {
-  display: none;
+.dropdown-option.selected {
+    background-color: #6031a7; /* Darker shade for selected option */
 }
 
-.submit button {
-  background-color: #392368;
-  padding: 10px 40px;
-  font-size: large;
-  color: #fff;
-  border: none;
-  font-weight: 500;
-  border-radius: 5px;
+.dropdown-icon {
+    margin-left: 10px;
+    font-size: 1rem; /* Adjust icon size */
+    color: #333;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
 }
 
-.close {
-  font-size: xxx-large;
-  font-weight: 500;
-  z-index: 2;
-  margin-top: 10px;
-  text-align: end;
-  border: none;
-  margin-right: 50px;
-  background-color: transparent;
+.dropdown-header.open .dropdown-icon {
+    transform: rotate(180deg); /* Rotate icon when open */
 }
 
-.close:hover {
-  cursor: pointer;
+/* Floating label specific styling */
+.dropdown-group {
+    position: relative;
+    margin-bottom: 20px;
 }
 
-#orgType {
-  margin-top: 0;
-}
-
-.error-msg {
-  margin-top: 1rem;
-  color: red;
-  font-size: 1rem;
-  display: flex;
+.dropdown-group input {
+    padding-top: 20px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: transparent;
 }
 
 
-.ml-148 {
-  margin-left: 148px;
-}
-
+/* End of Contact Form */
 
 
 /* verification page */
@@ -746,46 +834,56 @@ body.modal-open {
     font-size: var(--font-size-sm);
   }
   header .logo{
-    width: 100px;
-    height: 50px;
-    top: 23px;
+    width: 114px;
+    height: 55px;
+    top: 15px;
     left: 10px;
   }
   .btn{
-    padding: 5px;
-    height: 30px;
-    font-size: 10px;
+    padding: 10px;
+    margin-right: 10px;
+    width: 118px;
+    height: 25px;
+    font-size: 12.5px;
     border-radius: 5px;
   }
   .red{
-    width: 200px;
-    height: 200px;
-    left: 55%;
-    top:20%;
-    filter: blur(120px);
+    width: 248px;
+    height: 260px;
+    top:-10%;
+    filter: blur(210px);
   }
   .blue{
     left:45%;
     top: 50%;
-    width: 250px;
-    height: 250px;
-    filter: blur(150px);
+    width: 364px;
+    height: 339px;
+    filter: blur(210px);
   }
   .purple{
-    top: 50%;
-    width: 250px;
-    height: 300px;
-    filter: blur(150px);
+    top: 10%;
+    right: 30%;
+    width: 575px;
+    height: 449px;
+    filter: blur(210px);
   }
   .bubble {
     top: 5%;
     left: 50%;
   }
+
+  .elements{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
   .take-a-new{
-    left: 4%;
-    top: 10%;
-    font-size: 30px;
-    width: 200px;
+    font-size: 32px;
+    width: 238px;
+    font-weight: 500;
   }
   .unlock{
     font-size: 15px;
@@ -858,6 +956,7 @@ body.modal-open {
     font-size: 10px;
     border-radius: 5px;
     top: 30%;
+    z-index: 1;
   }
   .footer-right-links {
     display: flex;
