@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import authRoutes from './routes/auth.routes.js';
+import routes from './routes/routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import corsConfig from './middleware/corsConfig.js';
 import cookieParser from "cookie-parser";
@@ -12,7 +12,7 @@ import connectToDB from './db/connectToDb.js';
 const app = express();
 dotenv.config().parsed;
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5555;
 
 //middleware for parsing request body
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(cors(corsConfig));
 
 //Routes
-app.use('/api/tap-server', authRoutes);
+app.use('/api/tap-server', routes);
 
 // Error handling middleware
 app.use(errorHandler);

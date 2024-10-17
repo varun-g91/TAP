@@ -1,18 +1,25 @@
 import express from "express";
-import loginRoute from './loginRoute.js';
-import registrationRoute from './registrationRoute.js';
-import submitFormRoute from './submitFormRoute.js';
-import verifyEmailRoute from './verifyEmailRoute.js';
+import { signup, login, logout, getAuthenticatedUser } from "../controllers/auth.controller.js";
+import submitForm from "../controllers/formSubmissionController.js";
+import verifyEmail from "../controllers/emailVerificationController.js";
+import { validateEnquirer } from "../middleware/validators.js";
 
 const router = express.Router();
 
 //route to submit form
-router.use('/enquirer', submitFormRoute);
+// router.post('/enquirer', validateEnquirer, submitForm);
+router.post('/enquirer', validateEnquirer, (req, res, next) => {
+    console.log("Validation passed, moving to controller...");
+    next();
+}, submitForm);
+
 //route to register user
-router.use('/register', registrationRoute);
+router.post('/register', signup);
 //route to login user
-router.use('/login', loginRoute); 
+router.post('/login', login);
+//route to logout user
+router.post('/logout', logout);
 //route to verify user email
-router.use('/users/:id/verify/:token', verifyEmailRoute);
+router.get('/users/:id/verify/:token', verifyEmail);
 
 export default router;

@@ -8,14 +8,22 @@ export const validateEnquirer = [
     body("organizationType").notEmpty().withMessage("Organization type is required"),
     body("workExperience").notEmpty().withMessage("Work experience is required"),
     body("message").notEmpty().withMessage("Message is required"),
+
     (req, res, next) => {
+        console.log("Request body in validation middleware:", req.body);  // Log the request body
+
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            throw new Error(errors.join)
+            console.log("Validation errors:", errors.array());  // Log the validation errors
+            const extractedErrors = errors.array().map(err => ({ [err.param]: err.msg }));
+            return res.status(400).json({
+                errors: extractedErrors
+            });
         }
         next();
     },
 ];
+
 export const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {

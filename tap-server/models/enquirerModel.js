@@ -47,10 +47,10 @@ const enquirerSchema = mongoose.Schema(
             type: String,
             required: true,
             enum: [
-                '1-5 years',
-                '5-10 years',
-                '10-15 years',
-                '15-20 years',
+                '1-5 Years',
+                '5-10 Years',
+                '10-15 Years',
+                '15-20 Years',
                 'CXO level'
             ],
         },
